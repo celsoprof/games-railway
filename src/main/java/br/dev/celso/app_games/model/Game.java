@@ -1,28 +1,37 @@
 package br.dev.celso.app_games.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "tbl_games")
 public class Game {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String titulo;
     private String produtora;
     private double preco;
+    private String imageUrl;
 
-    public Game(int id, String titulo, String produtora, double preco) {
+    public Game(Long id, String titulo, String produtora, double preco, String imageUrl) {
         this.id = id;
         this.titulo = titulo;
         this.produtora = produtora;
         this.preco = preco;
+        this.imageUrl = imageUrl;
     }
 
     public Game(){
 
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -48,5 +57,9 @@ public class Game {
 
     public void setPreco(double preco) {
         this.preco = preco;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

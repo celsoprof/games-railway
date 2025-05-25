@@ -1,11 +1,11 @@
 package br.dev.celso.app_games.controller;
 
 import br.dev.celso.app_games.model.Game;
-import br.dev.celso.app_games.repository.GameRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import br.dev.celso.app_games.repository.GameRepositoryTest;
+import br.dev.celso.app_games.service.GameService;
+import jakarta.persistence.Access;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -13,16 +13,24 @@ import java.util.List;
 @RequestMapping("/api")
 public class GameController {
 
-    private GameRepository gameRepository = new GameRepository();
+    private GameRepositoryTest gameRepository = new GameRepositoryTest();
+
+    @Autowired
+    private GameService gameService;
 
     @GetMapping("/games")
     public List<Game> games(){
-        return gameRepository.findAll();
+        return gameService.findAllGames();
     }
 
     @GetMapping("/games/{id}")
-    public Game getGameById(@PathVariable int id){
-        return gameRepository.findById(id);
+    public Game getGameById(@PathVariable Long id){
+        return gameService.findGameById(id);
+    }
+
+    @PostMapping("/games")
+    public Game saveGame(@RequestBody Game game){
+        return gameService.createGame(game);
     }
 
 }
